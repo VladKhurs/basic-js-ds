@@ -3,57 +3,46 @@ const { NotImplementedError } = require('../extensions/index.js');
 // const { ListNode } = require('../extensions/list-node.js');
 
 /**
- * Implement the Queue with a given interface via linked list (use ListNode extension above).
+ * Given a singly linked list of integers l and an integer k,
+ * remove all elements from list l that have a value equal to k.
+ *
+ * @param {List} l
+ * @param {Number} k
+ * @return {List}
  *
  * @example
- * const queue = new Queue();
+ * For l = [3, 1, 2, 3, 4, 5] and k = 3,
+ * the output should be [1, 2, 4, 5]
  *
- * queue.enqueue(1); // adds the element to the queue
- * queue.enqueue(3); // adds the element to the queue
- * queue.dequeue(); // returns the top element from queue and deletes it, returns 1
- * queue.getUnderlyingList() // returns { value: 3, next: null }
+ * Singly - linked lists are already defined using interface
+ * class ListNode {
+ *   constructor(x) {
+ *     this.value = x;
+ *     this.next = null;
+ *   }
+ * }
  */
-class Queue {
+function removeKFromList(l, k) {
+  let start = l
+  let prev = null
 
-  constructor() {
-    this.first = null
-    this.last = null
-    this.size = 0
-  }
-
-  getUnderlyingList() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
-
-  enqueue(value) {
-
-    let newNode = ListNode(value)
-    if(!this.first) {
-      this.first = newNode
-      this.last = newNode
-    } 
-    else {
-      this.last.next = newNode
-      this.last = newNode
+  while(l){
+    if(l.value === k){            
+      if(prev===null){
+        start = l = l.next
+          continue
+      } else {
+          prev.next = l.next
+          l = l.next
+          continue
+      }
     }
-
-    return ++this.size
+    prev = l
+    l = l.next
   }
-
-  dequeue() {
-    if(!this.first) return null
-    const temp = this.first
-    if(this.first===this.last){
-      this.last = null
-    }
-
-    this.first = this.first.next
-    this.size--
-    return temp.value
-  }
+  return start
 }
 
 module.exports = {
-  Queue
+  removeKFromList
 };
