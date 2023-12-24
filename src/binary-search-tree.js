@@ -7,41 +7,96 @@ const { NotImplementedError } = require('../extensions/index.js');
 * using Node from extensions
 */
 class BinarySearchTree {
-
   root() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if(this.root.data === undefined) return null
+
+    return this.rootNode
   }
 
-  add(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  add(data) {
+
+    let addedNode = new Node(data)
+    const addNode = node => {
+      if(data < node.data) {
+        if(!node.left) {
+          node.left = addedNode
+        }
+        else {
+          addNode(node.left)
+        }
+      }
+
+      else if(data > node.data) {
+        if(!node.right) {
+          node.right = addedNode
+        }
+        else {
+          addNode(node.right)
+        }
+      }
+    }
+    addNode(this.rootNode)
   }
 
-  has(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  has(data) {
+    let nodeNow = this.rootNode 
+    while(nodeNow) {
+      if(data === nodeNow.data) {
+        return true
+      }
+      if(data < nodeNow.data) {
+        nodeNow = nodeNow.left
+      } else {
+        nodeNow = nodeNow.right
+      }
+    }
+    return false
   }
 
-  find(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  find(data) {
+    const n = null
+    let nodeNow = this.rootNode 
+    while(nodeNow) {
+      if(data === nodeNow.data) {
+        return nodeNow
+      }
+      if(data < nodeNow.data) {
+        nodeNow = nodeNow.left
+      } else {
+        nodeNow = nodeNow.right
+      }
+    }
+    return n
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data) {
+    let nodeNow = this.rootNode 
+    while(nodeNow !== null) {
+      if(data < nodeNow.data) {
+        nodeNow = nodeNow.right
+      }
+      else if(data > nodeNow.data) {
+        nodeNow = nodeNow.left
+      }
+    }
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    let nodeNow = this.rootNode
+    while(nodeNow.left) {
+      nodeNow = nodeNow.left
+    }
+    return nodeNow.data
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    let nodeNow = this.rootNode
+    while(nodeNow.right) {
+      nodeNow = nodeNow.right
+    }
+    return nodeNow.data
   }
+
 }
 
 module.exports = {
